@@ -1,58 +1,52 @@
 <template>
-    <div class="login">
-        <div>管理员登录</div>
-        <form @submit.prevent="handleLogin">
-            <div>
-                <label for="name">用户名:</label>
-                <input type="text" id="name" v-model="admin.name" required>
-            </div>
-            <div>
-                <label for="pwd">密码:</label>
-                <input type="password" id="pwd" v-model="admin.pwd" required class="mx-auto">
-            </div>
-            <button class="mx-auto" type="submit">登录</button>
-        </form>
-        <div v-if="loginData">
-            <h2>登录成功，返回数据：</h2>
-            <pre>{{ loginData }}</pre>
-        </div>
-        <div v-if="error" class="error">
-            <p>{{ error }}</p>
-        </div>
-    </div>
+    <ElForm :model="admin" label-width="auto" style="width: 30%;">
+        <ElFormItem label="Name" :label-position="itemLabelPosition">
+            <ElInput v-model="admin.name" />
+        </ElFormItem>
+        <ElFormItem label="Password" :label-position="itemLabelPosition">
+            <ElInput v-model="admin.pwd" type="password" />
+        </ElFormItem>
+        <ElFormItem>
+            <ElButton type="primary" @click="handleLogin" style="width: 100%;">
+                Login
+            </ElButton>
+        </ElFormItem>
+    </ElForm>
 </template>
 
 <script lang="ts">
-import { Login } from '@/stores/admin'; // 假设Login函数在api.js文件中
+import { defineComponent, ref } from 'vue';
+import { Login } from '@/stores/admin';
+import router from '@/router'
+import { ElMessage, type FormItemProps } from 'element-plus';
 
-export default {
-    data() {
-        return {
-            admin: {
-                name: '',
-                pwd: ''
-            },
-            loginData: null,
-            error: null
-        };
-    },
-    methods: {
-        async handleLogin() {
+export default defineComponent({
+    setup() {
+        const admin = ref({
+            name: '',
+            pwd: ''
+        });
+
+        const itemLabelPosition = ref<FormItemProps['labelPosition']>('right')
+
+        const handleLogin = async () => {
+            let token: any;
             try {
-                const response = await Login(this.admin);
-                this.loginData = response;
-                this.error = null;
-            } catch (err) {
-                this.error = err.message;
-                this.loginData = null;
+                token = await Login(admin.value);
+            } catch (e: Error | any) {
+                ElMessage.error(e.message);
+                return
             }
-        }
+            if (typeof token === 'string') {
+                localStorage.setItem('token', token)
+                router.push({ name: 'home' });
+            }
+        };
+        return {
+            admin,
+            itemLabelPosition,
+            handleLogin
+        };
     }
-};
+});
 </script>
-
-<style>
-.error {
-    color: red;
-}
-</style>

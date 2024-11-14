@@ -1,21 +1,28 @@
-import {login} from '@/api/admin'
-import type {Admin} from '@/types/Admin'
+import { login } from '@/api/admin'
+import type { Admin } from '@/types/Admin'
 
-export const Login = async (data: Admin) => {
-    const response = await login(data)
-    interface ApiResponse {
-        code: number;
-        message: string;
-        data?: string; // 假设 API 返回的是 Album 数组
-    }
+interface ApiResponse {
+    code: number;
+    msg: string;
+    data?: string;
+}
+
+export const Login = async (body: Admin) => {
+    const response = await login(body)
+    const apiResponse = response.data as ApiResponse;
     if (response.status === 200) {
-        const { code, message, data } = response.data as ApiResponse;
-        if (code === 1) {
-            return data || [];
+        if (apiResponse.code === 1) {
+            return apiResponse.data || null;
         } else {
-            throw new Error(`API Error: ${message}`);
+            const errorData = apiResponse ? apiResponse.data?.toString() : 'No data';
+            throw new Error(`Error: ${apiResponse?.msg.toString() || 'Unknown'}, ${errorData}`);
         }
     } else {
-        throw new Error(`HTTP Error: ${response.status}`);
+        throw new Error(`Error: ${apiResponse?.msg.toString() || 'Unknown'}`);
     }
+};
+
+
+export const Logout = () => {
+    localStorage.removeItem('token');
 }

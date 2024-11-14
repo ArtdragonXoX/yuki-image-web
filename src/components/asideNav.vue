@@ -1,6 +1,6 @@
 <template>
-    <div class="flex">
-        <aside class="bg-gray-800 text-white w-64 min-h-screen flex flex-col p-4">
+    <div class="flex" style="padding-left: 64px;"> <!-- Adjust padding-left to the width of the sidebar -->
+        <aside class="bg-gray-800 text-white w-64 min-h-screen flex flex-col p-4 border-r-2 border-gray-700 fixed left-0 top-0 z-50">
             <h2 class="text-2xl font-bold mb-4">侧边栏导航</h2>
             <nav>
                 <ul>
@@ -21,8 +21,9 @@
             </el-container>
         </div>
     </div>
-
 </template>
+
+
 
 <script lang="ts">
 import { defineComponent } from 'vue';
