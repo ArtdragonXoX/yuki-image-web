@@ -1,5 +1,6 @@
 <template>
-    <ElForm :model="admin" label-width="auto" style="width: 30%;">
+    <div class="layout">
+    <ElForm :model="admin" label-width="auto" >
         <ElFormItem label="Name" :label-position="itemLabelPosition">
             <ElInput v-model="admin.name" />
         </ElFormItem>
@@ -12,41 +13,43 @@
             </ElButton>
         </ElFormItem>
     </ElForm>
+    </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import { Login } from '@/stores/admin';
 import router from '@/router'
 import { ElMessage, type FormItemProps } from 'element-plus';
 
-export default defineComponent({
-    setup() {
-        const admin = ref({
-            name: '',
-            pwd: ''
-        });
 
-        const itemLabelPosition = ref<FormItemProps['labelPosition']>('right')
-
-        const handleLogin = async () => {
-            let token: any;
-            try {
-                token = await Login(admin.value);
-            } catch (e: Error | any) {
-                ElMessage.error(e.message);
-                return
-            }
-            if (typeof token === 'string') {
-                localStorage.setItem('token', token)
-                router.push({ name: 'home' });
-            }
-        };
-        return {
-            admin,
-            itemLabelPosition,
-            handleLogin
-        };
-    }
+const admin = ref({
+    name: '',
+    pwd: ''
 });
+
+const itemLabelPosition = ref<FormItemProps['labelPosition']>('right')
+
+const handleLogin = async () => {
+    let token: any;
+    try {
+        token = await Login(admin.value);
+    } catch (e: Error | any) {
+        ElMessage.error(e.message);
+        return
+    }
+    if (typeof token === 'string') {
+        localStorage.setItem('token', token)
+        router.push({ name: 'home' });
+    }
+};
 </script>
+
+<style>
+.layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+</style>

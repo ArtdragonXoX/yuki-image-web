@@ -1,54 +1,66 @@
 <template>
-    <div class="flex" style="padding-left: 64px;"> <!-- Adjust padding-left to the width of the sidebar -->
-        <aside class="bg-gray-800 text-white w-64 min-h-screen flex flex-col p-4 border-r-2 border-gray-700 fixed left-0 top-0 z-50">
-            <h2 class="text-2xl font-bold mb-4">侧边栏导航</h2>
-            <nav>
-                <ul>
-                    <li v-for="item in navItems" :key="item.path" class="mb-2">
-                        <router-link :to="item.path"
-                            class="block py-2 px-4 rounded hover:bg-gray-700 transition-colors">
-                            {{ item.name }}
-                        </router-link>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-        <div class="flex-1">
-            <el-container>
-                <el-main>
-                    <!-- RouterView will be rendered here -->
-                </el-main>
-            </el-container>
-        </div>
-    </div>
+    <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen"
+        @close="handleClose">
+        <el-sub-menu index="1">
+            <template #title>
+                <el-icon>
+                    <location />
+                </el-icon>
+                <span>Navigator One</span>
+            </template>
+            <el-menu-item-group>
+                <template #title><span>Group One</span></template>
+                <el-menu-item index="1-1">item one</el-menu-item>
+                <el-menu-item index="1-2">item two</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="Group Two">
+                <el-menu-item index="1-3">item three</el-menu-item>
+            </el-menu-item-group>
+            <el-sub-menu index="1-4">
+                <template #title><span>item four</span></template>
+                <el-menu-item index="1-4-1">item one</el-menu-item>
+            </el-sub-menu>
+        </el-sub-menu>
+        <el-menu-item index="2">
+            <el-icon><icon-menu /></el-icon>
+            <template #title>Navigator Two</template>
+        </el-menu-item>
+        <el-menu-item index="3" disabled>
+            <el-icon>
+                <document />
+            </el-icon>
+            <template #title>Navigator Three</template>
+        </el-menu-item>
+        <el-menu-item index="4">
+            <el-icon>
+                <setting />
+            </el-icon>
+            <template #title>Navigator Four</template>
+        </el-menu-item>
+    </el-menu>
 </template>
 
+<script lang="ts" setup>
+import { ref } from "vue";
+import {
+    Location,
+    Document,
+    Menu as IconMenu,
+    Setting,
+} from "@element-plus/icons-vue";
 
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { RouterLink } from 'vue-router';
-
-export default defineComponent({
-    name: 'SidebarNav',
-    components: {
-        RouterLink,
-    },
-    data() {
-        return {
-            navItems: [
-                { name: '首页', path: '/' },
-                { name: '登录', path: '/login' },
-                { name: '产品介绍', path: '/products' },
-                { name: '联系我们', path: '/contact' },
-            ],
-        };
-    },
-});
+const isCollapse = ref(true);
+const handleOpen = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath);
+};
+const handleClose = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath);
+};
 </script>
 
-<style scoped>
-.aside {
-  width: 200px; /* 或者任何你想要的宽度 */
+<style>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
 }
 </style>
