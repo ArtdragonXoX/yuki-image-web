@@ -33,4 +33,17 @@ export default defineConfig({
     },
   },
   base: '/web',
+  server:{
+    proxy:{
+      '/api':{
+        target:'http://127.0.0.1:7415',
+        changeOrigin:true,
+        rewrite:(path)=>path.replace(/^\/api/, '')
+      },
+      '/admin':{
+        target:'http://127.0.0.1:7415',
+        rewrite:(path)=>path.replace(/^\/api/, '')
+       },
+    }
+  }
 })
