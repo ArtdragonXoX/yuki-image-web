@@ -1,17 +1,24 @@
 <template>
     <div class="layout">
         <ElContainer>
-            <ElMain>
-                <ElText class="mx-1" size="large">我是主页</ElText>
-            </ElMain>
-            <ElFooter class="text-center">
-                <LogoutButton />
-            </ElFooter>
+            <el-row>
+                <el-col :span="40">
+                    <ImageCount :album-id=null />
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="40">
+                    <ImageSize :album-id=null />
+                </el-col>
+            </el-row>
         </ElContainer>
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({});
+<script lang="ts" setup>
+
+
 </script>
+
+<style>
+</style>

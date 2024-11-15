@@ -1,14 +1,20 @@
-import {getAlbums} from '@/api/album'
+import {getAlbums,getAlbumSize,getAlbumCount} from '@/api/album'
 import type { Album } from '@/types/Album'
 
 export const GetAlbums = async (params: { [key: string]: any }) => {
-    const response = await getAlbums(params);
+    let response: any = { status: 500, data: {} };
+    try {
+        response = await getAlbums(params); // 使用 try-await 替代 .then()
+    } catch (err) {
+        console.error('Error fetching albums:', err); // 在这里处理错误，例如打印到控制台
+        // 注意：这里不抛出错误，所以代码会继续执行
+    }
     interface ApiResponse {
         code: number;
         message: string;
         data?: Album[]; // 假设 API 返回的是 Album 数组
     }
-    if (response.status === 200) {
+    if (response.status === 200||response.status === 401) {
         const { code, message, data } = response.data as ApiResponse;
         if (code === 1) {
             return data || []; // 如果 albums 为 undefined，则返回空数组
@@ -19,3 +25,41 @@ export const GetAlbums = async (params: { [key: string]: any }) => {
         throw new Error(`HTTP Error: ${response.status}`);
     }
 };
+
+export const GetAlbumSize=async(id :number|null)=>{
+    const reponse = await getAlbumSize(id)
+    interface ApiResponse{
+        code: number;
+        msg: string;
+        data: number;
+    }
+    if(reponse.status === 200){
+        const {code,msg,data} = reponse.data as ApiResponse
+        if (code===1){
+            return data
+        }else{
+            throw new Error(msg)
+        }
+    }else{
+        throw new Error('获取数据失败')
+    }
+}
+
+export const GetAlbumCount=async(id :number|null)=>{
+    const reponse = await getAlbumCount(id)
+    interface ApiResponse{
+        code: number;
+        msg: string;
+        data: number;
+    }
+    if(reponse.status === 200){
+        const {code,msg,data} = reponse.data as ApiResponse
+        if (code===1){
+            return data
+        }else{
+            throw new Error(msg)
+        }
+    }else{
+        throw new Error('获取数据失败')
+    }
+}
