@@ -1,7 +1,7 @@
 <template>
     <div class="image-size">
         <el-container class="dash-board">
-            <el-header>
+            <el-header class="dash-header">
                 <el-text class="dash-title">图片占用</el-text>
             </el-header>
             <el-footer>
@@ -41,6 +41,13 @@ const formatSize = (value: number) => {
 <style>
 .dash-board {
     border: 1px solid #eaeaea;
+}
+
+.dash-header {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dash-title {

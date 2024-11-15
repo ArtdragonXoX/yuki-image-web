@@ -1,7 +1,7 @@
 <template>
     <div class="image-count">
         <el-container class="dash-board">
-            <el-header>
+            <el-header class="dash-header">
                 <el-text class="dash-title">图片总数</el-text>
             </el-header>
             <el-footer>
@@ -39,7 +39,7 @@ GetAlbumCount(props.albumId).then((res: any) => {
     border: 1px solid #eaeaea;
 }
 
-.el-header {
+.dash-header {
     text-align: center;
     display: flex;
     align-items: center;
