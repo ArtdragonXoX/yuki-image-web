@@ -15,15 +15,7 @@ import { useRouter,useRoute } from "vue-router";
 const activeIndex = ref('1'); // 默认激活的菜单项索引
 
 const route = useRoute();
-watchEffect(() => {
-    // 根据当前路由的path来设置activeIndex
-    // 这里假设你的路由path和菜单项的to属性是匹配的
-    const currentPath = route.path;
-    const index = menuLinks.value.findIndex(link => link.to === currentPath);
-    if (index !== -1) {
-        activeIndex.value = String(index + 1);
-    }
-});
+
 const token = localStorage.getItem('token');
 let tokenState =!(token == null || token === '') ;
 
@@ -59,6 +51,15 @@ const menuLinks = computed(() => {
         );
     }
     return links;
+});
+watchEffect(() => {
+    // 根据当前路由的path来设置activeIndex
+    // 这里假设你的路由path和菜单项的to属性是匹配的
+    const currentPath = route.path;
+    const index = menuLinks.value.findIndex(link => link.to === currentPath);
+    if (index !== -1) {
+        activeIndex.value = String(index + 1);
+    }
 });
 const router = useRouter();
 const handleNavigate = (to: string) => {
