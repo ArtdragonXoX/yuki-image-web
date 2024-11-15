@@ -13,7 +13,7 @@ export default {
     setup() {
         const handleLogout = () => {
             Logout();
-            router.push({ name: 'login' });
+            location.reload();
         };
 
         return { handleLogout };

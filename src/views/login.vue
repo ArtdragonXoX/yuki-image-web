@@ -40,7 +40,7 @@ const handleLogin = async () => {
     }
     if (typeof token === 'string') {
         localStorage.setItem('token', token)
-        router.push({ name: 'home' });
+        location.reload();
     }
 };
 </script>
