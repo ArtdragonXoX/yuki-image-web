@@ -1,4 +1,5 @@
 <template>
+  <BaseHeader />
   <el-container  class="flex main-container">
       <AsideNav />
         <el-main>
