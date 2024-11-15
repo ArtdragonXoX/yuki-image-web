@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Login } from '@/stores/admin';
-import router from '@/router'
 import { ElMessage, type FormItemProps } from 'element-plus';
 
 

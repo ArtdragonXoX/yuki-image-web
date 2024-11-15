@@ -8,3 +8,11 @@ export const login = (data: Admin) => {
         data,
     })
 }
+
+export const register = (data: Admin) => {
+    return instanceNotApi({
+        url: '/admin/register',
+        method: 'post',
+        data,
+    })
+}

@@ -1,5 +1,5 @@
 <template>
-    <el-menu default-active="1" class="el-menu-vertical" background-color="#545c64" text-color="#fff"
+    <el-menu :default-active="activeIndex" class="el-menu-vertical" background-color="#545c64" text-color="#fff"
         active-text-color="#ffd04b">
         <el-menu-item v-for="(link, index) in menuLinks" :key="index" :index="String(index + 1)"
             @click="handleNavigate(link.to)">
@@ -10,8 +10,20 @@
 
 <script lang="ts" setup>
 import { ref, computed, watchEffect } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 
+const activeIndex = ref('1'); // 默认激活的菜单项索引
+
+const route = useRoute();
+watchEffect(() => {
+    // 根据当前路由的path来设置activeIndex
+    // 这里假设你的路由path和菜单项的to属性是匹配的
+    const currentPath = route.path;
+    const index = menuLinks.value.findIndex(link => link.to === currentPath);
+    if (index !== -1) {
+        activeIndex.value = String(index + 1);
+    }
+});
 const token = localStorage.getItem('token');
 let tokenState =!(token == null || token === '') ;
 
