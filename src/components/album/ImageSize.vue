@@ -39,7 +39,7 @@ const formatSize = (value: number) => {
 </script>
 
 <style>
-.dash-board {
+/* .dash-board {
     border: 1px solid #eaeaea;
 }
 
@@ -56,5 +56,5 @@ const formatSize = (value: number) => {
 
 .dash-statistic {
     --el-statistic-content-font-size: 28px;
-}
+} */
 </style>

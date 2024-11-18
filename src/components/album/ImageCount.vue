@@ -1,12 +1,15 @@
 <template>
     <div class="image-count">
-        <el-container class="dash-board">
-            <el-header class="dash-header">
-                <el-text class="dash-title">图片总数</el-text>
-            </el-header>
-            <el-footer>
-                <el-statistic class="dash-statistic" :value="outputCount" />
-            </el-footer>
+        <el-container >
+                <div class="dash-board">
+                <el-header class="dash-header">
+                    <el-text class="dash-title">图片总数</el-text>
+                </el-header>
+                <el-main>
+                    <el-statistic class="dash-statistic" :value="outputCount" />
+                </el-main>
+                </div>
+            <StatisticsAreaChart class="AreaChart" :album-id="albumId" />
         </el-container>
     </div>
 </template>
@@ -35,8 +38,15 @@ GetAlbumCount(props.albumId).then((res: any) => {
 </script>
 
 <style>
+.image-count {
+    border: #eaeaea solid 1px;
+    height: 200px;
+}
+
 .dash-board {
     border: 1px solid #eaeaea;
+    width: 150px;
+    height: 200px;
 }
 
 .dash-header {
@@ -52,5 +62,9 @@ GetAlbumCount(props.albumId).then((res: any) => {
 
 .dash-statistic {
     --el-statistic-content-font-size: 28px;
+}
+
+.AreaChart {
+    border: solid #eaeaea 1px;
 }
 </style>

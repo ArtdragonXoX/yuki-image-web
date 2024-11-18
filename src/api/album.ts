@@ -1,4 +1,5 @@
 import { instance } from '@/utils/requests'
+import type { time } from 'echarts/core';
 
 export const getAlbums = async (params: { [key: string]: any }) => {
     return instance({
@@ -21,5 +22,14 @@ export const getAlbumSize = async (id: number|null) => {
     return instance({
         url: url,
         method: "get",
+    })
+};
+
+export const getAlbumStatistics=async(id:number|null,params:{ [key: string]: string })=>{
+    const url = id !== null ? `/album/statistics/${id}` : '/album/statistics';
+    return instance({
+        url: url,
+        method: "get",
+        params: params,
     })
 };

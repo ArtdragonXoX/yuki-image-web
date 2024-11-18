@@ -2,14 +2,14 @@
   <BaseHeader />
   <el-container  class="flex main-container">
       <AsideNav />
-        <el-main>
+        <el-main class="app-main">
           <RouterView />
         </el-main>
   </el-container>
 </template>
 
 <style>
-.el-main {
+.app-main {
   text-align: center;
 }
 

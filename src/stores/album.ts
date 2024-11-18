@@ -1,5 +1,6 @@
-import {getAlbums,getAlbumSize,getAlbumCount} from '@/api/album'
+import { getAlbums, getAlbumSize, getAlbumCount, getAlbumStatistics } from '@/api/album'
 import type { Album } from '@/types/Album'
+import {formatDate} from '@/utils/date'
 
 export const GetAlbums = async (params: { [key: string]: any }) => {
     let response: any = { status: 500, data: {} };
@@ -14,7 +15,7 @@ export const GetAlbums = async (params: { [key: string]: any }) => {
         message: string;
         data?: Album[]; // 假设 API 返回的是 Album 数组
     }
-    if (response.status === 200||response.status === 401) {
+    if (response.status === 200 || response.status === 401) {
         const { code, message, data } = response.data as ApiResponse;
         if (code === 1) {
             return data || []; // 如果 albums 为 undefined，则返回空数组
@@ -26,35 +27,54 @@ export const GetAlbums = async (params: { [key: string]: any }) => {
     }
 };
 
-export const GetAlbumSize=async(id :number|null)=>{
+export const GetAlbumSize = async (id: number | null) => {
     const reponse = await getAlbumSize(id)
-    interface ApiResponse{
+    interface ApiResponse {
         code: number;
         msg: string;
         data: number;
     }
-    if(reponse.status === 200){
-        const {code,msg,data} = reponse.data as ApiResponse
-        if (code===1){
+    if (reponse.status === 200) {
+        const { code, msg, data } = reponse.data as ApiResponse
+        if (code === 1) {
             return data
-        }else{
+        } else {
             throw new Error(msg)
         }
-    }else{
+    } else {
         throw new Error('获取数据失败')
     }
 }
 
-export const GetAlbumCount=async(id :number|null)=>{
+export const GetAlbumCount = async (id: number | null) => {
     const reponse = await getAlbumCount(id)
-    interface ApiResponse{
+    interface ApiResponse {
         code: number;
         msg: string;
         data: number;
     }
+    if (reponse.status === 200) {
+        const { code, msg, data } = reponse.data as ApiResponse
+        if (code === 1) {
+            return data
+        } else {
+            throw new Error(msg)
+        }
+    } else {
+        throw new Error('获取数据失败')
+    }
+}
+
+export const GetAlbumStatistics = async (id: number | null, start_time: Date, end_time: Date) => {
+    const reponse = await getAlbumStatistics(id, { "start-time": formatDate(start_time), "end-time": formatDate(end_time) })
+    interface ApiResponse {
+        code: number;
+        msg: string;
+        data: { [key: string]: number }
+    }
     if(reponse.status === 200){
         const {code,msg,data} = reponse.data as ApiResponse
-        if (code===1){
+        if(code === 1){
             return data
         }else{
             throw new Error(msg)

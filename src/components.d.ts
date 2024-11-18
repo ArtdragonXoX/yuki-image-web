@@ -9,10 +9,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     AsideNav: typeof import('./components/AsideNav.vue')['default']
     BaseHeader: typeof import('./components/BaseHeader.vue')['default']
-    ElAlert: typeof import('element-plus/es')['ElAlert']
+    ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
@@ -22,6 +23,7 @@ declare module 'vue' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElRows: typeof import('element-plus/es')['ElRows']
     ElStatistic: typeof import('element-plus/es')['ElStatistic']
     ElText: typeof import('element-plus/es')['ElText']
     IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
@@ -34,5 +36,6 @@ declare module 'vue' {
     LogoutButton: typeof import('./components/LogoutButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StatisticsAreaChart: typeof import('./components/StatisticsAreaChart.vue')['default']
   }
 }
