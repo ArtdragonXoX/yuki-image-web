@@ -11,9 +11,10 @@
 <script setup lang="ts">
 import { defineProps, ref, watch, onMounted } from "vue"
 import * as echarts from "echarts"
-import { GetAlbumStatistics } from "@/stores/album";
+import type { StatisticsFunc } from "@/types/func";
 const props = defineProps<{
     albumId: number | null;
+    Func: StatisticsFunc<number|null,Date,Date,Promise<{[key: string]: number}>>;
 }>();
 
 const size = ref<'default'>('default');
@@ -54,7 +55,7 @@ watch(value, (newVal) => {
 
 const updateOption = async () => {
     if (myChart.value != null && value.value != null) {
-        const statistics = await GetAlbumStatistics(props.albumId, value.value[0], value.value[1]);
+        const statistics = await props.Func(props.albumId, value.value[0], value.value[1]);
         const xAxisData: string[] = Object.keys(statistics);
         option = {
             grid: {

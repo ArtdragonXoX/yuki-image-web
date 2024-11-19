@@ -9,7 +9,7 @@
                     <el-statistic class="dash-statistic" :value="outputCount" />
                 </el-main>
                 </div>
-            <StatisticsAreaChart class="AreaChart" :album-id="albumId" />
+            <StatisticsAreaChart class="AreaChart" :album-id="albumId" :-func="Func" />
         </el-container>
     </div>
 </template>
@@ -19,10 +19,13 @@ import { ref } from 'vue';
 import { useTransition } from '@vueuse/core';
 import { GetAlbumCount } from '@/stores/album';
 import { ElMessage } from 'element-plus';
+import { GetAlbumStatistics } from "@/stores/album";
 
 const props = defineProps<{
     albumId: number | null;
 }>();
+
+const Func = GetAlbumStatistics;
 
 const count = ref(0);
 const outputCount = useTransition(count, {

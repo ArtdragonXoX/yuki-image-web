@@ -1,6 +1,7 @@
 import { getAlbums, getAlbumSize, getAlbumCount, getAlbumStatistics } from '@/api/album'
 import type { Album } from '@/types/Album'
 import {formatDate} from '@/utils/date'
+import type { StatisticsFunc } from '@/types/func';
 
 export const GetAlbums = async (params: { [key: string]: any }) => {
     let response: any = { status: 500, data: {} };
@@ -46,6 +47,8 @@ export const GetAlbumSize = async (id: number | null) => {
     }
 }
 
+
+
 export const GetAlbumCount = async (id: number | null) => {
     const reponse = await getAlbumCount(id)
     interface ApiResponse {
@@ -65,7 +68,7 @@ export const GetAlbumCount = async (id: number | null) => {
     }
 }
 
-export const GetAlbumStatistics = async (id: number | null, start_time: Date, end_time: Date) => {
+export const GetAlbumStatistics: StatisticsFunc<number|null, Date, Date,Promise<{ [key: string]: number }>> = async (id,start_time,end_time): Promise<{ [key: string]: number; }> => {
     const reponse = await getAlbumStatistics(id, { "start-time": formatDate(start_time), "end-time": formatDate(end_time) })
     interface ApiResponse {
         code: number;
