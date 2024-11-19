@@ -1,12 +1,12 @@
-import { getAlbums, getAlbumSize, getAlbumCount, getAlbumCountStatistics, getAlbumSizeStatistics } from '@/api/album'
+import { getAlbums, getAlbum, getAlbumSize, getAlbumCount, getAlbumCountStatistics, getAlbumSizeStatistics } from '@/api/album'
 import type { Album } from '@/types/Album'
 import { formatDate } from '@/utils/date'
 import type { StatisticsFunc } from '@/types/func';
 
-export const GetAlbums = async (params: { [key: string]: any }) => {
+export const GetAlbums = async ():Promise<Album[]> => {
     let response: any = { status: 500, data: {} };
     try {
-        response = await getAlbums(params); // 使用 try-await 替代 .then()
+        response = await getAlbums(); // 使用 try-await 替代 .then()
     } catch (err) {
         console.error('Error fetching albums:', err); // 在这里处理错误，例如打印到控制台
         // 注意：这里不抛出错误，所以代码会继续执行
@@ -28,15 +28,15 @@ export const GetAlbums = async (params: { [key: string]: any }) => {
     }
 };
 
-export const GetAlbumSize = async (id: number | null) => {
-    const reponse = await getAlbumSize(id)
+export const GetAlbum = async (albumId: number) => {
+    const response = await getAlbum(albumId)
     interface ApiResponse {
         code: number;
         msg: string;
-        data: number;
+        data: Album;
     }
-    if (reponse.status === 200) {
-        const { code, msg, data } = reponse.data as ApiResponse
+    if (response.status === 200) {
+        const { code, msg, data } = response.data as ApiResponse
         if (code === 1) {
             return data
         } else {
@@ -46,73 +46,91 @@ export const GetAlbumSize = async (id: number | null) => {
         throw new Error('获取数据失败')
     }
 }
-
-
-
-export const GetAlbumCount = async (id: number | null) => {
-    const reponse = await getAlbumCount(id)
-    interface ApiResponse {
-        code: number;
-        msg: string;
-        data: number;
-    }
-    if (reponse.status === 200) {
-        const { code, msg, data } = reponse.data as ApiResponse
-        if (code === 1) {
-            return data
+    export const GetAlbumSize = async (id: number | null) => {
+        const reponse = await getAlbumSize(id)
+        interface ApiResponse {
+            code: number;
+            msg: string;
+            data: number;
+        }
+        if (reponse.status === 200) {
+            const { code, msg, data } = reponse.data as ApiResponse
+            if (code === 1) {
+                return data
+            } else {
+                throw new Error(msg)
+            }
         } else {
-            throw new Error(msg)
+            throw new Error('获取数据失败')
         }
-    } else {
-        throw new Error('获取数据失败')
     }
-}
 
-export const GetAlbumCountStatistics: StatisticsFunc<number | null, Date, Date, Promise<{ [key: string]: number }>> = async (id, start_time, end_time): Promise<{ [key: string]: number; }> => {
-    const reponse = await getAlbumCountStatistics(id, { "start-time": formatDate(start_time), "end-time": formatDate(end_time) })
-    interface ApiResponse {
-        code: number;
-        msg: string;
-        data: { [key: string]: number }
-    }
-    if (reponse.status === 200) {
-        const { code, msg, data } = reponse.data as ApiResponse
-        if (code === 1) {
-            return data
+
+
+    export const GetAlbumCount = async (id: number | null) => {
+        const reponse = await getAlbumCount(id)
+        interface ApiResponse {
+            code: number;
+            msg: string;
+            data: number;
+        }
+        if (reponse.status === 200) {
+            const { code, msg, data } = reponse.data as ApiResponse
+            if (code === 1) {
+                return data
+            } else {
+                throw new Error(msg)
+            }
         } else {
-            throw new Error(msg)
+            throw new Error('获取数据失败')
         }
-    } else {
-        throw new Error('获取数据失败')
     }
-}
 
-export const GetAlbumSizeStatistics: StatisticsFunc<number | null, Date, Date, Promise<{ [key: string]: number }>> = async (id, start_time, end_time): Promise<{ [key: string]: number; }> => {
-    const reponse = await getAlbumSizeStatistics(id, { "start-time": formatDate(start_time), "end-time": formatDate(end_time) })
-    interface ApiResponse {
-        code: number;
-        msg: string;
-        data: { [key: string]: number }
-    }
-    if (reponse.status === 200) {
-        const { code, msg, data } = reponse.data as ApiResponse
-        if (code === 1) {
-            return processData(data)
+    export const GetAlbumCountStatistics: StatisticsFunc<number | null, Date, Date, Promise<{ [key: string]: number }>> = async (id, start_time, end_time): Promise<{ [key: string]: number; }> => {
+        const reponse = await getAlbumCountStatistics(id, { "start-time": formatDate(start_time), "end-time": formatDate(end_time) })
+        interface ApiResponse {
+            code: number;
+            msg: string;
+            data: { [key: string]: number }
+        }
+        if (reponse.status === 200) {
+            const { code, msg, data } = reponse.data as ApiResponse
+            if (code === 1) {
+                return data
+            } else {
+                throw new Error(msg)
+            }
         } else {
-            throw new Error(msg)
+            throw new Error('获取数据失败')
         }
-    } else {
-        throw new Error('获取数据失败')
     }
-}
 
-const processData = (rawData: { [key: string]: number }): { [key: string]: number } => {
-    const processedData: { [key: string]: number } = {}
-    for (const key in rawData) {
-        if (rawData.hasOwnProperty(key)) {
-            // 除以 1024 并保留两位小数
-            processedData[key] = Math.round((rawData[key] / (1024*1024)) * 100) / 100
+    export const GetAlbumSizeStatistics: StatisticsFunc<number | null, Date, Date, Promise<{ [key: string]: number }>> = async (id, start_time, end_time): Promise<{ [key: string]: number; }> => {
+        const reponse = await getAlbumSizeStatistics(id, { "start-time": formatDate(start_time), "end-time": formatDate(end_time) })
+        interface ApiResponse {
+            code: number;
+            msg: string;
+            data: { [key: string]: number }
+        }
+        if (reponse.status === 200) {
+            const { code, msg, data } = reponse.data as ApiResponse
+            if (code === 1) {
+                return processData(data)
+            } else {
+                throw new Error(msg)
+            }
+        } else {
+            throw new Error('获取数据失败')
         }
     }
-    return processedData
-}
+
+    const processData = (rawData: { [key: string]: number }): { [key: string]: number } => {
+        const processedData: { [key: string]: number } = {}
+        for (const key in rawData) {
+            if (rawData.hasOwnProperty(key)) {
+                // 除以 1024 并保留两位小数
+                processedData[key] = Math.round((rawData[key] / (1024 * 1024)) * 100) / 100
+            }
+        }
+        return processedData
+    }

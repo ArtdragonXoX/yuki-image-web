@@ -1,11 +1,16 @@
 import { instance } from '@/utils/requests'
-import type { time } from 'echarts/core';
 
-export const getAlbums = async (params: { [key: string]: any }) => {
+export const getAlbums = async () => {
     return instance({
         url: '/album',
         method: 'get',
-        params: params,
+    })
+}
+
+export const getAlbum = async (id: number) => {
+    return instance({
+        url: `/album/${id}`,
+        method: 'get',
     })
 }
 

@@ -93,9 +93,6 @@ const updateOption = async () => {
         myChart.value.setOption(option, {
             replaceMerge: ['xAxis', 'yAxis', 'series'],
         });
-        console.log(statistics);
-        console.log(xAxisData);
-        console.log(Object.values(statistics));
     }
 }
 window.addEventListener('resize', function () {

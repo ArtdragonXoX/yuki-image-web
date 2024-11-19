@@ -7,6 +7,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AlbumData: typeof import('./components/album/AlbumListItem.vue')['default']
+    AlbumInfo: typeof import('./components/album/AlbumInfo.vue')['default']
+    AlbumList: typeof import('./components/album/AlbumList.vue')['default']
+    AlbumListItem: typeof import('./components/album/AlbumListItem.vue')['default']
     AsideNav: typeof import('./components/AsideNav.vue')['default']
     BaseHeader: typeof import('./components/BaseHeader.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
