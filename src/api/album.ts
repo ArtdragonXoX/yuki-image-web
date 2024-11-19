@@ -9,7 +9,7 @@ export const getAlbums = async (params: { [key: string]: any }) => {
     })
 }
 
-export const getAlbumCount = async (id: number|null) => {
+export const getAlbumCount = async (id: number | null) => {
     const url = id !== null ? `/album/count/${id}` : '/album/count';
     return instance({
         url: url,
@@ -17,7 +17,7 @@ export const getAlbumCount = async (id: number|null) => {
     })
 };
 
-export const getAlbumSize = async (id: number|null) => {
+export const getAlbumSize = async (id: number | null) => {
     const url = id !== null ? `/album/size/${id}` : '/album/size';
     return instance({
         url: url,
@@ -25,8 +25,17 @@ export const getAlbumSize = async (id: number|null) => {
     })
 };
 
-export const getAlbumCountStatistics=async(id:number|null,params:{ [key: string]: string })=>{
+export const getAlbumCountStatistics = async (id: number | null, params: { [key: string]: string }) => {
     const url = id !== null ? `/album/count/statistics/${id}` : '/album/count/statistics';
+    return instance({
+        url: url,
+        method: "get",
+        params: params,
+    })
+};
+
+export const getAlbumSizeStatistics = async (id: number | null, params: { [key: string]: string }) => {
+    const url = id !== null ? `/album/size/statistics/${id}` : '/album/size/statistics';
     return instance({
         url: url,
         method: "get",

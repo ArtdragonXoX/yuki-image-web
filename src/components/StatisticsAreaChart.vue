@@ -1,20 +1,18 @@
 <template>
     <el-container direction="vertical">
-        <div class="statistics-area-chart" id="statistics-area-chart"></div>
-
+        <div class="statistics-area-chart" ref="chartDom"></div>
         <el-date-picker v-model="value" type="daterange" range-separator="To" :size="size" :defaultTime="defaultTime"
             format="YYYY-MM-DD"></el-date-picker>
-
     </el-container>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, watch, onMounted } from "vue"
+import { defineProps, ref, watch, onMounted, onUnmounted } from "vue"
 import * as echarts from "echarts"
 import type { StatisticsFunc } from "@/types/func";
 const props = defineProps<{
     albumId: number | null;
-    Func: StatisticsFunc<number|null,Date,Date,Promise<{[key: string]: number}>>;
+    Func: StatisticsFunc<number | null, Date, Date, Promise<{ [key: string]: number }>>;
 }>();
 
 const size = ref<'default'>('default');
@@ -32,17 +30,24 @@ const defaultTime = ref(getTodayRange());
 type EChartsOption = echarts.EChartsOption;
 
 const myChart = ref<echarts.ECharts | null>(null);
+const chartDom = ref<HTMLElement | null>(null);
 let option: EChartsOption | null = null;
 
 onMounted(() => {
     // 确保 DOM 元素已经渲染
-    const chartDom = document.getElementById('statistics-area-chart');
-    if (chartDom) {
+    // const chartDom = document.getElementById('area-chart');
+    if (chartDom.value) {
         // 初始化 ECharts 实例
-        myChart.value = echarts.init(chartDom);
+        myChart.value = echarts.init(chartDom.value);
         updateOption();
     } else {
         console.error('无法找到用于初始化 ECharts 的 DOM 元素');
+    }
+});
+
+onUnmounted(() => {
+    if (myChart.value) {
+        myChart.value.dispose(); // 调用ECharts的dispose方法
     }
 });
 
@@ -62,7 +67,7 @@ const updateOption = async () => {
                 width: '80%',
                 height: '70%',
                 top: 20,
-                left: 40,
+                left: 60,
             },
             xAxis: {
                 type: 'category',
