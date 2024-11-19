@@ -19,13 +19,13 @@ import { ref } from 'vue';
 import { useTransition } from '@vueuse/core';
 import { GetAlbumCount } from '@/stores/album';
 import { ElMessage } from 'element-plus';
-import { GetAlbumStatistics } from "@/stores/album";
+import { GetAlbumCountStatistics } from "@/stores/album";
 
 const props = defineProps<{
     albumId: number | null;
 }>();
 
-const Func = GetAlbumStatistics;
+const Func = GetAlbumCountStatistics;
 
 const count = ref(0);
 const outputCount = useTransition(count, {
