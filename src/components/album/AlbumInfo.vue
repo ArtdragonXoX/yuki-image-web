@@ -1,13 +1,14 @@
 <template>
-    <el-container direction="vertical">
-        <el-text class="mx-1" type="info">ID:{{ id }}</el-text>
-        <el-text class="mx-1" type="primary">Name:{{ name }}</el-text>
-        <el-row>
-            <el-col :span="12">
-                <el-text class="mx-1">CreateTime:{{ create_time }}</el-text>
-            </el-col>
-            <el-col :span="12">
-                <el-text class="mx-1">UpdateTime:{{ update_time }}</el-text>
+    <el-container class="album-info" direction="vertical">
+        <el-text class="album-info-text" type="info">ID:{{ id }}</el-text>
+        <el-text class="album-info-text" style="font-size:30px" type="primary" tag="b">{{ name }}</el-text>
+        <el-text class="album-info-text">CreateTime:</el-text>
+        <el-text class="album-info-text" type="success">{{ create_time }}</el-text>
+        <el-text class="album-info-text">UpdateTime:</el-text>
+        <el-text class="album-info-text" type="success">{{ update_time }}</el-text>
+        <el-row justify="end">
+            <el-col :span="4">
+                <AlbumDataButton :album-id="albumId" />
             </el-col>
         </el-row>
     </el-container>
@@ -28,7 +29,6 @@ const create_time = ref('');
 const update_time = ref('');
 
 GetAlbum(props.albumId).then((res: Album) => {
-    console.log(res);
     if (res?.id)
         id.value = res?.id;
     if (res?.name)
@@ -42,3 +42,16 @@ GetAlbum(props.albumId).then((res: Album) => {
 });
 
 </script>
+
+<style>
+.album-info-text {
+    margin: 2px;
+    font-size: 18px;
+}
+
+.album-info {
+    border: solid 1px #eee;
+    width: 30vh;
+    height: 100%;
+}
+</style>

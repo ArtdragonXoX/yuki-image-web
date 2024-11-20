@@ -12,6 +12,7 @@
 
 <style>
 .home-container {
+    height: 40vh;
     display: flex;
     flex-direction: column;
 }

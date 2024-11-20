@@ -1,8 +1,8 @@
 <template>
     <el-container direction="vertical">
         <div class="statistics-area-chart" ref="chartDom"></div>
-        <el-date-picker v-model="value" type="daterange" range-separator="To" :size="size" :defaultTime="defaultTime"
-            format="YYYY-MM-DD"></el-date-picker>
+        <el-date-picker v-if="datePickerFlag" v-model="dateValue" type="daterange" range-separator="To" :size="size"
+            :defaultTime="defaultTime" format="YYYY-MM-DD"></el-date-picker>
     </el-container>
 </template>
 
@@ -10,10 +10,14 @@
 import { defineProps, ref, watch, onMounted, onUnmounted } from "vue"
 import * as echarts from "echarts"
 import type { StatisticsFunc } from "@/types/func";
-const props = defineProps<{
-    albumId: number | null;
+const props = withDefaults(defineProps<{
+    albumId?: number | null;
     Func: StatisticsFunc<number | null, Date, Date, Promise<{ [key: string]: number }>>;
-}>();
+    datePickerFlag?: boolean; // 使用 ? 表示该属性是可选的
+}>(), {
+    albumId:null,
+    datePickerFlag: true,
+});
 
 const size = ref<'default'>('default');
 
@@ -24,7 +28,7 @@ function getTodayRange() {
     return [startOfDay, endOfDay] as [Date, Date];
 }
 
-const value = ref<[Date, Date]>(getTodayRange());
+const dateValue = ref<[Date, Date]>(getTodayRange());
 const defaultTime = ref(getTodayRange());
 
 type EChartsOption = echarts.EChartsOption;
@@ -40,6 +44,7 @@ onMounted(() => {
         // 初始化 ECharts 实例
         myChart.value = echarts.init(chartDom.value);
         updateOption();
+        console.log(props.datePickerFlag)
     } else {
         console.error('无法找到用于初始化 ECharts 的 DOM 元素');
     }
@@ -52,20 +57,20 @@ onUnmounted(() => {
 });
 
 
-watch(value, (newVal) => {
+watch(dateValue, (newVal) => {
     if (newVal) {
         updateOption();
     };
 });
 
 const updateOption = async () => {
-    if (myChart.value != null && value.value != null) {
-        const statistics = await props.Func(props.albumId, value.value[0], value.value[1]);
+    if (myChart.value != null && dateValue.value != null) {
+        const statistics = await props.Func(props.albumId, dateValue.value[0], dateValue.value[1]);
         const xAxisData: string[] = Object.keys(statistics);
         option = {
             grid: {
                 width: '80%',
-                height: '70%',
+                height: '65%',
                 top: 20,
                 left: 60,
             },

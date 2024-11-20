@@ -47,3 +47,11 @@ export const getAlbumSizeStatistics = async (id: number | null, params: { [key: 
         params: params,
     })
 };
+
+export const updateAlbum = async (id: number, data: { [key: string]: any }) => {
+    return instance({
+        url: `/album/${id}`,
+        method: 'put',
+        data,
+    });
+}

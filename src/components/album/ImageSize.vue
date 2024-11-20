@@ -1,15 +1,15 @@
 <template>
-    <div class="image-count">
-        <el-container >
+    <div class="image-size">
+        <el-container class="dash-container">
                 <div class="dash-board">
                 <el-header class="dash-header">
                     <el-text class="dash-title">图片占用</el-text>
                 </el-header>
-                <el-main>
+                <el-main class="dash-main">
                     <el-statistic class="dash-statistic" :value="outputSize" :formatter="formatSize" suffix="MB" />
                 </el-main>
                 </div>
-            <StatisticsAreaChart class="AreaChart" :album-id="albumId" :-func="Func" />
+            <StatisticsAreaChart class="AreaChart" :-func="Func" :date-picker-flag="datePickerFlag" />
         </el-container>
     </div>
 </template>
@@ -21,9 +21,13 @@ import { GetAlbumSize } from '@/stores/album';
 import { ElMessage } from 'element-plus';
 import { GetAlbumSizeStatistics } from "@/stores/album";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     albumId: number | null;
-}>();
+    datePickerFlag?: boolean;
+}>(),{
+    albumId: null,
+    datePickerFlag:true,
+});
 
 const Func = GetAlbumSizeStatistics;
 
@@ -44,22 +48,5 @@ const formatSize = (value: number) => {
 </script>
 
 <style>
-/* .dash-board {
-    border: 1px solid #eaeaea;
-}
-
-.dash-header {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-title {
-    font-size: 20px;
-}
-
-.dash-statistic {
-    --el-statistic-content-font-size: 28px;
-} */
+@import '../../assets/album.css'
 </style>

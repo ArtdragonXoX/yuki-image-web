@@ -1,0 +1,44 @@
+.image-count {
+    height: 50%;
+}
+
+.image-size {
+    height: 50%;
+}
+
+.dash-container {
+    height: 100%;
+}
+
+.dash-board {
+    border: 1px solid #eaeaea;
+    width: 15%;
+    height: 100%;
+}
+
+.dash-header {
+    height: 20%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-main {
+    height: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.dash-title {
+    font-size: 15px;
+}
+
+.dash-statistic {
+    --el-statistic-content-font-size: 26px;
+}
+
+.AreaChart {
+    border: solid #eaeaea 1px;
+}
+

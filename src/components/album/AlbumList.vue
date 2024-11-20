@@ -2,12 +2,10 @@
 <template>
     <div>
         <h2>Album List</h2>
-        <ul>
             <!-- 使用 v-for 指令遍历 albumIds，为每个 albumId 渲染一个 AlbumListItem 组件 -->
             <li v-for="albumId in albumIds" :key="albumId">
                 <AlbumListItem :album-id="albumId" />
             </li>
-        </ul>
     </div>
 </template>
 
