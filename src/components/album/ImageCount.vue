@@ -9,7 +9,7 @@
                     <el-statistic class="dash-statistic" :value="outputCount" />
                 </el-main>
                 </div>
-            <StatisticsAreaChart class="AreaChart" :-func="Func" :date-picker-flag="datePickerFlag" />
+            <StatisticsAreaChart class="AreaChart" :-func="Func" :album-id="albumId" :date-picker-flag="datePickerFlag" />
         </el-container>
     </div>
 </template>

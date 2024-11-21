@@ -7,8 +7,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AlbumData: typeof import('./components/album/AlbumListItem.vue')['default']
+    AlbumData: typeof import('./components/album/AlbumData.vue')['default']
     AlbumDataButton: typeof import('./components/album/AlbumDataButton.vue')['default']
+    AlbumDeleteButton: typeof import('./components/album/AlbumDeleteButton.vue')['default']
     AlbumInfo: typeof import('./components/album/AlbumInfo.vue')['default']
     AlbumList: typeof import('./components/album/AlbumList.vue')['default']
     AlbumListItem: typeof import('./components/album/AlbumListItem.vue')['default']

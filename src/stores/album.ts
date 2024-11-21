@@ -1,4 +1,4 @@
-import { getAlbums, getAlbum, getAlbumSize, getAlbumCount, getAlbumCountStatistics, getAlbumSizeStatistics, updateAlbum } from '@/api/album'
+import { getAlbums, getAlbum, getAlbumSize, getAlbumCount, getAlbumCountStatistics, getAlbumSizeStatistics, updateAlbum, deleteAlbum,createAlbum } from '@/api/album'
 import type { Album } from '@/types/Album'
 import { formatDate } from '@/utils/date'
 import type { StatisticsFunc } from '@/types/func';
@@ -148,10 +148,49 @@ export const UpdateAlbum = async (id: number, data: Album) => {
         const { code, message } = response.data as ApiResponse
         if (code === 1) {
             return message
-        } else{
+        } else {
             throw new Error(message)
         }
     } else {
         throw new Error('更新失败')
+    }
+}
+
+export const DeleteAlbum = async (id: number) => {
+    const response = await deleteAlbum(id)
+    interface ApiResponse {
+        code: number;
+        message: string;
+        data?: null;
+    }
+    if (response.status === 200) {
+        const { code, message } = response.data as ApiResponse
+        if (code === 1) {
+            return message
+        } else {
+            throw new Error(message)
+        }
+    } else {
+        throw new Error('删除失败')
+    }
+}
+
+export const CreateAlbum = async (data: Album) => {
+    const response = await createAlbum(data)
+    interface ApiResponse {
+        code: number;
+        message: string;
+        data?: null;
+    }
+    if (response.status === 201) {
+        const { code, message } = response.data as ApiResponse
+        if (code === 1) {
+            return message
+        } else {
+            throw new Error(message)
+        }
+    }
+    else {
+        throw new Error('创建失败')
     }
 }

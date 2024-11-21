@@ -44,7 +44,6 @@ onMounted(() => {
         // 初始化 ECharts 实例
         myChart.value = echarts.init(chartDom.value);
         updateOption();
-        console.log(props.datePickerFlag)
     } else {
         console.error('无法找到用于初始化 ECharts 的 DOM 元素');
     }
@@ -55,7 +54,6 @@ onUnmounted(() => {
         myChart.value.dispose(); // 调用ECharts的dispose方法
     }
 });
-
 
 watch(dateValue, (newVal) => {
     if (newVal) {

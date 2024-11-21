@@ -15,7 +15,7 @@ export const getFormat = async (id: number | null) => {
     })
 }
 
-export const addFormatSuppot = async (data: { [key: string]: any }) => {
+export const addFormatSuppot = async (data: { [key: string]: string|number }) => {
     return instance({
         url: '/album/format',
         method: 'post',
@@ -23,7 +23,7 @@ export const addFormatSuppot = async (data: { [key: string]: any }) => {
     });
 }
 
-export const deleteFormatSupport = async (data: { [key: string]: any }) => {
+export const deleteFormatSupport = async (data: { [key: string]: string|number }) => {
     return instance({
         url: '/album/format',
         method: 'delete',

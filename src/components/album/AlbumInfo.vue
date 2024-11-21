@@ -8,14 +8,17 @@
         <el-text class="album-info-text" type="success">{{ update_time }}</el-text>
         <el-row justify="end">
             <el-col :span="4">
-                <AlbumDataButton :album-id="albumId" />
+                <AlbumDataButton :album-id="albumId" @updateAlbum="onUpdateAlbum" />
+            </el-col>
+            <el-col :span="4">
+                <AlbumDeleteButton :album-id="albumId" @delete="DeleteAlbum" />
             </el-col>
         </el-row>
     </el-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { GetAlbum } from '@/stores/album';
 import type { Album } from '@/types/Album';
 
@@ -28,18 +31,30 @@ const name = ref('');
 const create_time = ref('');
 const update_time = ref('');
 
-GetAlbum(props.albumId).then((res: Album) => {
-    if (res?.id)
-        id.value = res?.id;
-    if (res?.name)
-        name.value = res?.name;
-    if (res?.create_time)
-        create_time.value = res?.create_time;
-    if (res?.update_time)
-        update_time.value = res?.update_time;
-}).catch((err) => {
-    console.log(err);
+onMounted(() => {
+    onUpdateAlbum();
 });
+
+const emit = defineEmits(['updateAlbum']);
+
+const onUpdateAlbum = () => {
+    GetAlbum(props.albumId).then((res: Album) => {
+        if (res?.id)
+            id.value = res?.id;
+        if (res?.name)
+            name.value = res?.name;
+        if (res?.create_time)
+            create_time.value = res?.create_time;
+        if (res?.update_time)
+            update_time.value = res?.update_time;
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
+const DeleteAlbum = () => {
+    emit('updateAlbum');
+};
 
 </script>
 
@@ -51,7 +66,7 @@ GetAlbum(props.albumId).then((res: Album) => {
 
 .album-info {
     border: solid 1px #eee;
-    width: 30vh;
+    width: 2vh;
     height: 100%;
 }
 </style>
