@@ -1,5 +1,4 @@
-import axios, { type AxiosRequestConfig } from 'axios';
-
+import axios from 'axios';
 
 export const instance = axios.create({
   baseURL: '/api/v1/',
@@ -18,7 +17,7 @@ export const instanceNotApi = axios.create({
   },
 })
 
-instanceNotApi.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   return response;
 }, function (error) {
@@ -27,6 +26,9 @@ instanceNotApi.interceptors.response.use(function (response) {
     // 如果状态码是401，表示未认证，清空token
     localStorage.removeItem('token');
     // 可以选择重定向到登录页面或者显示一个错误消息给用户
+    location.reload();
+  } else if (error.response) {
+    return error.response;
   }
   return Promise.reject(error);
 });

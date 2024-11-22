@@ -1,41 +1,26 @@
 import { login, register } from '@/api/admin'
 import type { Admin } from '@/types/Admin'
-
-interface ApiResponse {
-    code: number;
-    message: string;
-    data?: string;
-}
+import type { ApiResponse } from '@/types/misc'
 
 export const Login = async (body: Admin) => {
     const response = await login(body)
-    const apiResponse = response.data as ApiResponse;
-    if (response.status === 200) {
-        if (apiResponse.code === 1) {
-            return apiResponse.data || null;
-        } else {
-            const errorData = apiResponse ? apiResponse.data?.toString() : 'No data';
-            throw new Error(`Error: ${apiResponse?.message.toString() || 'Unknown'}, ${errorData}`);
-        }
+    const { code, message, data } = response.data as ApiResponse<string>;
+    if (code === 1) {
+        return data as string;
     } else {
-        throw new Error(`Error: ${apiResponse?.message.toString() || 'Unknown'}`);
+        throw new Error(`Error: ${message},${data}`);
     }
 };
-
 export const Register = async (body: Admin) => {
     const response = await register(body)
-    const apiResponse = response.data as ApiResponse;
-    if (response.status === 200) {
-        if (apiResponse.code === 1) {
-            return apiResponse.message || null;
+    const {code,message,data} = response.data as ApiResponse<string>;
+    
+        if (code === 1) {
+            return data as string;
         } else {
-            const errorData = apiResponse ? apiResponse.data?.toString() : 'No data';
-            throw new Error(`Error: ${apiResponse?.message.toString() || 'Unknown'}, ${errorData}`);
+            throw new Error(`Error: ${message},${data}`);
         }
-    } else {
-        throw new Error(`Error: ${apiResponse?.message.toString() || 'Unknown'}`);
-    }
-};
+    };
 
 export const Logout = () => {
     localStorage.removeItem('token');

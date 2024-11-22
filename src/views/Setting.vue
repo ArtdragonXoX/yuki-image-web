@@ -72,10 +72,11 @@ onMounted(async () => {
 });
 
 const submitForm = async () => {
-    await UpdateConfig(config.value).then(() => {
+    await UpdateConfig(config.value).then((res) => {
+        config.value = res;
         ElMessage.success('修改成功');
     }).catch((e) => {
-        ElMessage.error(e);
+        ElMessage.error(e.message);
     });
 };
 
