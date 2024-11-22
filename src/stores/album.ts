@@ -19,7 +19,7 @@ export const GetAlbum = async (albumId: number) => {
     const response = await getAlbum(albumId)
     const { code, message, data } = response.data as ApiResponse<Album>;
     if (code === 1) {
-        return data
+        return data as Album;
     } else {
         throw new Error(`Error: ${message},${data}`);
     }

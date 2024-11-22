@@ -2,8 +2,10 @@
 <template>
     <div>
         <h2>Album List</h2>
-        <el-row justify="end">
-            <AlbumDataButton @updateAlbum="UpdateAlbum" />
+        <el-row justify="end" style="height: 5vh;">
+            <div style="width: 5vh;">
+                <AlbumDataButton @updateAlbum="UpdateAlbum" />
+            </div>
         </el-row>
         <!-- 使用 v-for 指令遍历 albumIds，为每个 albumId 渲染一个 AlbumListItem 组件 -->
         <li v-for="albumId in albumIds" :key="albumId" style="list-style-type:none; margin-bottom:2vh;">

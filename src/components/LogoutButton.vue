@@ -1,6 +1,6 @@
 <template>
     <div class="logout-button">
-        <ElButton type="danger" @click="handleLogout" style="width: 30%;">
+        <ElButton type="danger" @click="handleLogout" style="width: 70%;">
             Logout
         </ElButton>
     </div>
